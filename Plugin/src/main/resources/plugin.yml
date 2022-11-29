@@ -1,0 +1,10 @@
+name: AbstractionExamplePluginUpdated
+main: org.kitteh.example.plugin.MyPlugin
+author: __AltDemono__
+description: testing
+version: '${project.version}'
+api-version: '1.13'
+commands:
+  example:
+    description: Example command
+    usage: /example message here

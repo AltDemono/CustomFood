@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="abstractionexampleplugin-api" />
+        <module name="abstractionexampleplugin-v1_19_1" />
+        <module name="abstractionexampleplugin-v1_19" />
+        <module name="abstractionexampleplugin-v1_18_R2" />
+        <module name="abstractionexampleplugin-v1_19_R1" />
+        <module name="abstractionexampleplugin-v1_18_R1" />
+      </profile>
+      <profile name="Annotation profile for AbstractionExamplePlugin Parent" enabled="true">
+        <sourceOutputDir name="../target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="abstractionexampleplugin" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="abstractionexampleplugin-v1_19_R1 (1)" target="18" />
+      <module name="abstractionexampleplugin-v1_19_R1 (2)" target="19" />
+      <module name="abstractionexampleplugin-v1_19_R1 (3)" target="16" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
