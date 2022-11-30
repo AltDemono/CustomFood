@@ -13,7 +13,7 @@
         <module name="abstractionexampleplugin-v1_19_R1" />
         <module name="abstractionexampleplugin-v1_18_R1" />
       </profile>
-      <profile name="Annotation profile for AbstractionExamplePlugin Parent" enabled="true">
+      <profile name="Annotation profile for CustomFoodPlugin Parent" enabled="true">
         <sourceOutputDir name="../target/generated-sources/annotations" />
         <sourceTestOutputDir name="../target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

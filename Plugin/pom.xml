@@ -3,8 +3,8 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.kitteh</groupId>
-  <artifactId>abstractionexampleplugin</artifactId>
+  <groupId>net.alt.pl_spigot</groupId>
+  <artifactId>customfoodplugin</artifactId>
   <packaging>jar</packaging>
   <name>AbstractionExamplePluginUpdated</name>
   <version>1.0.0-SNAPSHOT</version> <!-- This is where I track the version -->
@@ -18,48 +18,48 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.kitteh</groupId>
-      <artifactId>abstractionexampleplugin-v1_18_R1</artifactId>
+      <groupId>net.alt.pl_spigot</groupId>
+      <artifactId>customfoodplugin-v1_18_R1</artifactId>
       <version>1_18_R1</version>
       <type>jar</type>
       <scope>compile</scope> <!-- The 'compile' scope will get shaded in -->
       <optional>true</optional> <!-- Set all of these to optional, to ensure plugins building against yours don't look for them -->
     </dependency>
     <dependency>
-      <groupId>org.kitteh</groupId>
-      <artifactId>abstractionexampleplugin-v1_18_R2</artifactId>
+      <groupId>net.alt.pl_spigot</groupId>
+      <artifactId>customfoodplugin-v1_18_R2</artifactId>
       <version>1_18_R2</version>
       <type>jar</type>
       <scope>compile</scope> <!-- The 'compile' scope will get shaded in -->
       <optional>true</optional> <!-- Set all of these to optional, to ensure plugins building against yours don't look for them -->
     </dependency>
     <dependency>
-      <groupId>org.kitteh</groupId>
-      <artifactId>abstractionexampleplugin-v1_19_R1</artifactId>
+      <groupId>net.alt.pl_spigot</groupId>
+      <artifactId>customfoodplugin-v1_19_R1</artifactId>
       <version>1_19_R1</version>
       <type>jar</type>
       <scope>compile</scope> <!-- The 'compile' scope will get shaded in -->
       <optional>true</optional> <!-- Set all of these to optional, to ensure plugins building against yours don't look for them -->
     </dependency>
     <dependency>
-      <groupId>org.kitteh</groupId>
-      <artifactId>abstractionexampleplugin-v1_19_1</artifactId>
+      <groupId>net.alt.pl_spigot</groupId>
+      <artifactId>customfoodplugin-v1_19_1</artifactId>
       <version>1_19_1</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.kitteh</groupId>
-      <artifactId>abstractionexampleplugin-v1_19</artifactId>
+      <groupId>net.alt.pl_spigot</groupId>
+      <artifactId>customfoodplugin-v1_19</artifactId>
       <version>1_19</version>
       <type>jar</type>
       <scope>compile</scope>
       <optional>true</optional>
     </dependency>
     <dependency>
-      <groupId>org.kitteh</groupId>
-      <artifactId>abstractionexampleplugin-api</artifactId>
+      <groupId>net.alt.pl_spigot</groupId>
+      <artifactId>customfoodplugin-api</artifactId>
       <version>API</version>
       <type>jar</type>
       <scope>compile</scope>
@@ -80,7 +80,7 @@
 
   <build>
     <directory>../target</directory> <!-- Build it one level up, because it is the one we care about -->
-    <finalName>AbstractionExamplePlugin</finalName>
+    <finalName>customfoodplugin</finalName>
     <!-- Define filtering for the inclusion of plugin.yml, so we can utilize the pom.xml version in it -->
     <resources>
       <resource>

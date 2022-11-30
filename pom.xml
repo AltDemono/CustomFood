@@ -2,16 +2,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.kitteh</groupId>
-  <artifactId>abstractionexampleplugin-parent</artifactId>
+  <groupId>net.alt.pl_spigot</groupId>
+  <artifactId>customfoodplugin-parent</artifactId>
   <!-- Artifact ID doesn't matter for anything but the final product
        At least, it doesn't matter externally to this setup -->
   <packaging>pom</packaging>
   <!-- Packaging? POM -->
   <version>parent</version>
   <!-- I keep my versions of the internal projects static, so I don't have to rename them all the time. -->
-  <name>AbstractionExamplePlugin Parent</name>
-  <url>http://kitteh.org</url>
+  <name>CustomFoodPlugin Parent</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>

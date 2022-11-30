@@ -1,0 +1,6 @@
+food:
+  iron_apple:
+    name: "Iron Apple"
+    custom_model_data: 1
+    material: 'APPLE'
+    give_food: 1
