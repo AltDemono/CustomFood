@@ -1,10 +1,10 @@
-name: AbstractionExamplePluginUpdated
-main: org.kitteh.example.plugin.MyPlugin
+name: CustomFood
+main: net.alt.pl_spigot.plugin.MyPlugin
 author: __AltDemono__
 description: testing
 version: '1.0.0-SNAPSHOT'
 api-version: '1.13'
 commands:
-  example:
-    description: Example command
-    usage: /example message here
+  cf:
+    description: custom food plugin commands
+    usage: /cf [give] [food-id] or /cf help
