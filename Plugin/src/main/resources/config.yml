@@ -4,3 +4,7 @@ food:
     custom_model_data: 1
     material: 'APPLE'
     food_level: 1
+    description:
+      - '#'
+      - '#'
+      - '#'

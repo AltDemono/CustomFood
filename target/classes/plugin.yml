@@ -7,4 +7,10 @@ api-version: '1.13'
 commands:
   cf:
     description: custom food plugin commands
-    usage: /cf [give] [food-id] or /cf help
+    usage: /cf
+  cf give:
+    description: give a item
+    usage: /cf give <players>
+  cf help:
+    description: help
+    usage: /cf help

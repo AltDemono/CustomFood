@@ -90,6 +90,7 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
 
                         i_meta.setDisplayName(this.nmsHandler.color("&r" + name));
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("food_level"), PersistentDataType.INTEGER, food_level);
+                        i_meta.setLore(getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getStringList("description"));
                         item.setItemMeta(i_meta);
 
                         int count = (args.length==3) ? 1 : Integer.parseInt(args[3]);
