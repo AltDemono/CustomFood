@@ -4,6 +4,7 @@ author: __AltDemono__
 description: testing
 version: '1.0.0-SNAPSHOT'
 api-version: '1.13'
+softdepend: [HolographicDisplays]
 commands:
   cf:
     description: custom food plugin commands

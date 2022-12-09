@@ -14,9 +14,19 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
+    <repository>
+      <id>codemc-repo</id>
+      <url>https://repo.codemc.io/repository/maven-public/</url>
+    </repository>
   </repositories>
 
   <dependencies>
+    <dependency>
+      <groupId>me.filoghost.holographicdisplays</groupId>
+      <artifactId>holographicdisplays-api</artifactId>
+      <version>3.0.0</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>net.alt.pl_spigot</groupId>
       <artifactId>customfoodplugin-v1_18_R1</artifactId>

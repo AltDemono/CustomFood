@@ -1,10 +1,19 @@
+hologramsEnabled: true
+
 food:
   iron_apple:
-    name: "&6Iron Apple"
+    custom_id: 1
+    name: '&cIron Carrot'
     custom_model_data: 1
-    material: 'APPLE'
-    food_level: 1
-    description:
-      - '#'
-      - '#'
-      - '#'
+    material: CARROT
+    food_level: 20
+    place:
+      allowedBlocks:
+        - farmland
+      material: CARROTS
+      droppedItems:
+        Carrot:
+          custom_id: 1
+          amount:
+            - 1
+            - 2
