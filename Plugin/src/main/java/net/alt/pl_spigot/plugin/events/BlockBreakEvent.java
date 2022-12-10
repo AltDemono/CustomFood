@@ -2,16 +2,16 @@ package net.alt.pl_spigot.plugin.events;
 
 import net.alt.pl_spigot.plugin.api.NMS;
 import net.alt.pl_spigot.plugin.crops.Crop;
+import net.alt.pl_spigot.plugin.crops.PlayerCropHarvest;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 
+@SuppressWarnings("unused")
 public class BlockBreakEvent implements Listener {
     private final Plugin plugin;
     private final NMS nmsHandler;
@@ -42,6 +42,8 @@ public class BlockBreakEvent implements Listener {
 
             crops.get(e.getBlock()).removeHologram();
             crops.remove(e.getBlock());
+
+            this.plugin.getServer().getPluginManager().callEvent(new PlayerCropHarvest(crops.get(e.getBlock()), e.getPlayer()));
         }
     }
 }

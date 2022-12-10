@@ -6,10 +6,13 @@
  */
 package net.alt.pl_spigot.plugin.crops;
 
+// HolographicDisplaysAPI
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
+
 import net.alt.pl_spigot.plugin.api.NMS;
-import org.bukkit.Bukkit;
+
+// Bukkit
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -17,6 +20,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
+// Java
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

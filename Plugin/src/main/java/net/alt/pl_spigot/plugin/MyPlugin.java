@@ -1,3 +1,10 @@
+/**
+ * Custom Food Plugin
+ *
+ * @author Alt Demono
+ * @version 1.0.0
+ */
+
 package net.alt.pl_spigot.plugin;
 
 // In-plugin files
@@ -7,9 +14,7 @@ import net.alt.pl_spigot.plugin.events.BlockBreakEvent;
 import net.alt.pl_spigot.plugin.events.BlockPlace;
 
 // Bukkit
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,7 +31,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 // Java
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 @SuppressWarnings("unused")
@@ -37,7 +41,7 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
     /* -===================================================================- */
     // nms handler
     private NMS nmsHandler;
-    private HashMap<Block, Crop> crops = new HashMap<>();
+    private final HashMap<Block, Crop> crops = new HashMap<>();
     public NMS getNmsHandler() {
         return nmsHandler;
     }
@@ -62,13 +66,17 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
             }
         } catch (final Exception e) {
             e.printStackTrace();
+
+            // Logger messages
             this.getLogger().severe("Could not find support for this Spigot version.");
-            this.getLogger().info("Check for updates at URL HERE");
+            this.getLogger().info("Check for updates at https://github.com/AltDemono/CustomFood");
             this.getLogger().info(version);
             this.setEnabled(false);
             return;
         }
         /* -===================================================================- */
+
+
 
         /* -===================================================================- */
         // Holographic Displays
@@ -105,24 +113,27 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
         if (sender instanceof Player) {
             // Getting a player param
             Player player = (Player) sender;
-            switch (args[0])
-            {
+
+            switch (args[0]) {
+
                 // Give command
-                case "give":
+                case "give" -> {
                     /* -===================================================================- */
                     // Choosing a food material
                     @Nullable
                     String mat = this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getString("material");
+                    assert mat != null;
                     Material material = Material.getMaterial(mat);
                     /* -===================================================================- */
 
 
                     /* -===================================================================- */
                     // Checking Food item
-                    if(this.getConfig().getConfigurationSection("food").isConfigurationSection(args[2]) && material != null && args.length == 4 || args.length == 3) {
+                    if (this.getConfig().getConfigurationSection("food").isConfigurationSection(args[2]) && material != null && args.length == 4 || args.length == 3) {
 
                         /* -===================================================================- */
                         // Creating a new food (item)
+                        assert material != null;
                         ItemStack item = new ItemStack(material);
                         ItemMeta i_meta = item.getItemMeta();
 
@@ -144,14 +155,16 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
                         // Set item meta
                         item.setItemMeta(i_meta);
                         // Setting count
-                        int count = (args.length==3) ? 1 : Integer.parseInt(args[3]);
+                        int count = (args.length == 3) ? 1 : Integer.parseInt(args[3]);
                         item.setAmount(count);
                         /* -===================================================================- */
 
 
                         /* -===================================================================- */
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("food_level"), PersistentDataType.INTEGER, food_level);
+                        assert pType != null;
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("ptype"), PersistentDataType.STRING, pType);
+                        assert type != null;
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("type"), PersistentDataType.STRING, type);
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("id"), PersistentDataType.STRING, args[2]);
                         /* -===================================================================- */
@@ -160,33 +173,33 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
                         /* -===================================================================- */
                         // Give item & send message
                         this.nmsHandler.giveItem(p, item);
-                        this.nmsHandler.sendMessage(player, this.nmsHandler.color(String.format("CustomFood > gave [%s&f] %s to %s", name, count, p.getName())));
+                        this.nmsHandler.sendMessage(player, this.nmsHandler.color(String.format("CustomFood > gave [%s&f] %s to %s.", name, count, p.getName())));
                         /* -===================================================================- */
+                    } else {
+                        this.nmsHandler.sendMessage(player, this.nmsHandler.color("CustomFood > &cERROR!"));
                     }
-                    else
-                    {
-                        this.nmsHandler.sendMessage(player, this.nmsHandler.color("CustomFood > &cERROR"));
-                    }
-                    break;
+                }
                 /* -===================================================================- */
 
                 // Help command
-                case "help":
+                case "help" -> {
                     this.nmsHandler.sendMessage((Player) sender, "CustomFood > Help[1]");
                     this.nmsHandler.sendMessage((Player) sender, "======------COMMANDS--------========");
                     this.nmsHandler.sendMessage((Player) sender, "/cf give <player> <food-id> <count>");
                     this.nmsHandler.sendMessage((Player) sender, "/cf reload");
                     this.nmsHandler.sendMessage((Player) sender, "Plugin created by __AltDemono__");
                     this.nmsHandler.sendMessage((Player) sender, "CustomFood > Help[2]");
-                    break;
-                case "reload":
+                }
+
+                // reload command
+                case "reload" -> {
                     this.reloadConfig();
-                    this.nmsHandler.sendMessage((Player) sender, "CustomFood > Plugin is reloaded");
-                    break;
+                    this.nmsHandler.sendMessage((Player) sender, this.nmsHandler.color("CustomFood > &aReload complete!"));
+                }
             }
         }else
         {
-            this.nmsHandler.sendMessage((Player) sender, this.nmsHandler.color("CustomFood > &cERROR"));
+            this.nmsHandler.sendMessage((Player) sender, this.nmsHandler.color("CustomFood > &cERROR!"));
         }
         return true;
     }
@@ -206,6 +219,9 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
                     e.setCancelled(true);
                 } else {
                     e.setCancelled(true);
+
+                    Location location = e.getPlayer().getLocation();
+
                     p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
                     e.getPlayer().setFoodLevel(p.getFoodLevel() + e.getItem().getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("food_level"), PersistentDataType.INTEGER));
                 }
@@ -238,5 +254,4 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
         return builder.toString();
     }
     /* -===================================================================- */
-
 }
