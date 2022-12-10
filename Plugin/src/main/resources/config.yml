@@ -1,19 +1,19 @@
-hologramsEnabled: tru
+hologramsEnabled: true
 
 food:
-  iron_apple:
+  iron_carrot:
+    type: multiple
     custom_id: 1
     name: '&cIron Carrot'
     custom_model_data: 1
     material: CARROT
     food_level: 20
     place:
+      type: multiple
       allowedBlocks:
         - farmland
       material: CARROTS
-      droppedItems:
-        Carrot:
-          custom_id: 1
+      droppedItem:
           amount:
             - 1
             - 2

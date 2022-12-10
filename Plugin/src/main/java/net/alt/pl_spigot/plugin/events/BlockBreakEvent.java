@@ -35,7 +35,7 @@ public class BlockBreakEvent implements Listener {
             location.setZ(location.getZ()+.5);
             location.setX(location.getX()+.5);
 
-            e.getPlayer().getWorld().dropItemNaturally(location, new ItemStack(Material.ACACIA_FENCE));
+            crops.get(e.getBlock()).dropItem();
 
             plugin.getLogger().info("Dropped!");
 

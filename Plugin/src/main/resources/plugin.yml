@@ -15,3 +15,6 @@ commands:
   cf help:
     description: help
     usage: /cf help
+  cf reload:
+    description: plugin reload
+    usage: /cf reload

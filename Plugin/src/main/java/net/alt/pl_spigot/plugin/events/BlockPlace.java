@@ -1,24 +1,26 @@
 package net.alt.pl_spigot.plugin.events;
 
+// Plugin files
 import net.alt.pl_spigot.plugin.api.NMS;
 import net.alt.pl_spigot.plugin.crops.Crop;
 import net.alt.pl_spigot.plugin.crops.CropPlaceEvent;
-import org.bukkit.Location;
+
+// Bukkit
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
+// Java
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class BlockPlace implements Listener {
     private final Plugin plugin;
@@ -31,15 +33,23 @@ public class BlockPlace implements Listener {
         this.crops = crops;
     }
 
+    /* -===================================================================- */
     @EventHandler
     public void blockPlace(BlockPlaceEvent e) {
         if (e.getItemInHand().getItemMeta().getPersistentDataContainer().has(NamespacedKey.fromString("id"), PersistentDataType.STRING)) {
             e.getBlockPlaced().setType(Material.AIR);
+
+            if (Objects.equals(e.getItemInHand().getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("ptype"), PersistentDataType.STRING), "food"))
+            {
+                nmsHandler.sendMessage(e.getPlayer(), "CustomFood > you can't place this item!");
+                e.setCancelled(true);
+            }
+
             ItemStack item = e.getItemInHand();
             String item_id = item.getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("id"), PersistentDataType.STRING);
             ConfigurationSection csF = plugin.getConfig().getConfigurationSection("food").getConfigurationSection(item_id);
             assert csF != null;
-            Crop crop = new Crop(Material.getMaterial(csF.getConfigurationSection("place").getString("material")), item, e.getBlockPlaced(), plugin, nmsHandler);
+            Crop crop = new Crop(Material.getMaterial(csF.getConfigurationSection("place").getString("material")), item, e.getBlockPlaced(), item_id, plugin, nmsHandler);
             crop.setName(csF.getString("name"));
             List<String> materials = (List<String>) csF.getConfigurationSection("place").getList("allowedBlocks");
             for (int i = 0; i <= materials.size() - 1; i++) {
@@ -53,5 +63,5 @@ public class BlockPlace implements Listener {
             this.plugin.getServer().getPluginManager().callEvent(new CropPlaceEvent(crop, e.getPlayer(), e.getBlock(), e.getBlockAgainst()));
         }
     }
-
+    /* -===================================================================- */
 }

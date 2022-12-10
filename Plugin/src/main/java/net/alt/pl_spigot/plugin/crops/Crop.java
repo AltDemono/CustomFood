@@ -9,17 +9,23 @@ package net.alt.pl_spigot.plugin.crops;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 import net.alt.pl_spigot.plugin.api.NMS;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 @SuppressWarnings("unused")
 public class Crop implements ICrop{
+    /* -===================================================================- */
+    // params
     private Hologram hologram;
     private Material material;
     private ArrayList<Material> allowedBlocks = new ArrayList<>();
@@ -27,19 +33,29 @@ public class Crop implements ICrop{
     private Material seedMaterial;
     private String name;
     private Block block;
-    private Plugin plugin;
-    private NMS nmsHandler;
-    private HolographicDisplaysAPI api;
-    private HashMap<ItemStack, Integer> dropItems = new HashMap<>();
+    private final Plugin plugin;
+    private final NMS nmsHandler;
+    private final HolographicDisplaysAPI api;
+    private final String itemId;
+    private final HashMap<ItemStack, Integer> dropItems = new HashMap<>();
+    /* -===================================================================- */
 
-    public Crop(Material material, ItemStack item, Block block, Plugin plugin, NMS nms) {
+
+    /* -===================================================================- */
+    // constructor
+    public Crop(Material material, ItemStack item, Block block, String id, Plugin plugin, NMS nms) {
         this.material = material;
         this.block = block;
+        this.itemId = id;
         this.item = item;
         this.plugin = plugin;
         this.nmsHandler = nms;
         this.api = HolographicDisplaysAPI.get((Plugin) plugin);
     }
+    /* -===================================================================- */
+
+    /* -===================================================================- */
+    // methods
 
     // get a crop seed material
     @Override
@@ -136,7 +152,12 @@ public class Crop implements ICrop{
 
     @Override
     public void dropItem() {
-        
+        ItemStack newItem = new ItemStack(item);
+        Random rnd = new Random();
+        ConfigurationSection configSect = plugin.getConfig().getConfigurationSection("food").getConfigurationSection(itemId).getConfigurationSection("place").getConfigurationSection("droppedItem");
+        List<Integer> amounts = (List<Integer>) configSect.getList("amount");
+        newItem.setAmount(rnd.nextInt(amounts.get(0),amounts.get(1)));
+        block.getWorld().dropItemNaturally(block.getLocation(), newItem);
     }
 
     @Override
@@ -171,4 +192,5 @@ public class Crop implements ICrop{
             target.setType(this.getMaterial());
         }
     }
+    /* -===================================================================- */
 }
