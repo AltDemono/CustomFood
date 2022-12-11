@@ -4,9 +4,11 @@ import net.alt.pl_spigot.plugin.api.NMS;
 import net.alt.pl_spigot.plugin.crops.Crop;
 import net.alt.pl_spigot.plugin.crops.PlayerCropHarvest;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
@@ -26,7 +28,9 @@ public class BlockBreakEvent implements Listener {
     @EventHandler
     public void onBlockBreak(org.bukkit.event.block.BlockBreakEvent e)
     {
-        if(crops.containsKey(e.getBlock()))
+        Location location_ = e.getBlock().getLocation();
+        location_.setY(location_.getY()+1);
+        if (crops.containsKey(e.getBlock()))
         {
             e.setDropItems(false);
 
@@ -37,10 +41,22 @@ public class BlockBreakEvent implements Listener {
 
             crops.get(e.getBlock()).dropItem();
 
-            plugin.getLogger().info("Dropped!");
-
-
             crops.get(e.getBlock()).removeHologram();
+            crops.remove(e.getBlock());
+
+            this.plugin.getServer().getPluginManager().callEvent(new PlayerCropHarvest(crops.get(e.getBlock()), e.getPlayer()));
+        } else if (crops.containsKey(location_.getBlock())) {
+            e.setDropItems(false);
+
+            Location location = crops.get(location_.getBlock()).getBlock().getLocation();
+            location.setY(location.getY()+.5);
+            location.setZ(location.getZ()+.5);
+            location.setX(location.getX()+.5);
+
+            crops.get(location_.getBlock()).dropItem();
+            e.getPlayer().getWorld().dropItemNaturally(location, new ItemStack(Material.DIRT));
+
+            crops.get(location_.getBlock()).removeHologram();
             crops.remove(e.getBlock());
 
             this.plugin.getServer().getPluginManager().callEvent(new PlayerCropHarvest(crops.get(e.getBlock()), e.getPlayer()));

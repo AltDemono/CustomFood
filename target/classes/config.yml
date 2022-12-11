@@ -1,4 +1,5 @@
 hologramsEnabled: true
+blockBreak: true
 
 food:
   iron_carrot:

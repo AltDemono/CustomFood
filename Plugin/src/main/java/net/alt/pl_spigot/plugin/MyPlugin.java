@@ -129,7 +129,7 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
 
                     /* -===================================================================- */
                     // Checking Food item
-                    if (this.getConfig().getConfigurationSection("food").isConfigurationSection(args[2]) && material != null && args.length == 4 || args.length == 3) {
+                    if (this.getConfig().getConfigurationSection("food").isConfigurationSection(args[2]) && material != null && args.length == 4 || args.length == 3 && this.getConfig().getConfigurationSection("food").isConfigurationSection(args[2]) && material != null) {
 
                         /* -===================================================================- */
                         // Creating a new food (item)
@@ -175,12 +175,15 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
                         this.nmsHandler.giveItem(p, item);
                         this.nmsHandler.sendMessage(player, this.nmsHandler.color(String.format("CustomFood > gave [%s&f] %s to %s.", name, count, p.getName())));
                         /* -===================================================================- */
+                    } else if (!this.getConfig().getConfigurationSection("food").isConfigurationSection(args[2])) {
+                        this.nmsHandler.sendMessage(player, this.nmsHandler.color("CustomFood > &cERROR!"));
                     } else {
                         this.nmsHandler.sendMessage(player, this.nmsHandler.color("CustomFood > &cERROR!"));
                     }
                 }
                 /* -===================================================================- */
 
+                /* -===================================================================- */
                 // Help command
                 case "help" -> {
                     this.nmsHandler.sendMessage((Player) sender, "CustomFood > Help[1]");
@@ -190,12 +193,16 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
                     this.nmsHandler.sendMessage((Player) sender, "Plugin created by __AltDemono__");
                     this.nmsHandler.sendMessage((Player) sender, "CustomFood > Help[2]");
                 }
+                /* -===================================================================- */
 
+                /* -===================================================================- */
                 // reload command
                 case "reload" -> {
                     this.reloadConfig();
                     this.nmsHandler.sendMessage((Player) sender, this.nmsHandler.color("CustomFood > &aReload complete!"));
+                    this.nmsHandler.sendMessage((Player) sender, this.nmsHandler.color(" > &сIf after restarting the server you do not see holograms, just rejoin the server."));
                 }
+                /* -===================================================================- */
             }
         }else
         {
