@@ -1,3 +1,4 @@
 Plugin created by Alt Demono!
 
+Docs: https://catpaw-1.gitbook.io/customfood-wiki/
 Issues:  https://github.com/AltDemono/CustomFood/issues
