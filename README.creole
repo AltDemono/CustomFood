@@ -1,1 +1,3 @@
 Plugin created by Alt Demono!
+
+Issues:  https://github.com/AltDemono/CustomFood/issues
