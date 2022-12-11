@@ -1,7 +1,0 @@
-net\alt\pl_spigot\plugin\events\BlockPlace.class
-net\alt\pl_spigot\plugin\crops\ICrop.class
-net\alt\pl_spigot\plugin\MyPlugin.class
-net\alt\pl_spigot\plugin\crops\CropPlaceEvent.class
-net\alt\pl_spigot\plugin\crops\PlayerCropHarvest.class
-net\alt\pl_spigot\plugin\events\BlockBreakEvent.class
-net\alt\pl_spigot\plugin\crops\Crop.class
