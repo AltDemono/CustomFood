@@ -26,6 +26,10 @@ public class BlockBreakEvent implements Listener {
     @EventHandler
     public void onBlockBreak(org.bukkit.event.block.BlockBreakEvent e)
     {
+
+        Location location_ = e.getBlock().getLocation();
+        location_.setY(location_.getY()+1);
+
         if(crops.containsKey(e.getBlock()))
         {
             e.setDropItems(false);
@@ -37,13 +41,24 @@ public class BlockBreakEvent implements Listener {
 
             crops.get(e.getBlock()).dropItem();
 
-            plugin.getLogger().info("Dropped!");
-
-
             crops.get(e.getBlock()).removeHologram();
             crops.remove(e.getBlock());
 
             this.plugin.getServer().getPluginManager().callEvent(new PlayerCropHarvest(crops.get(e.getBlock()), e.getPlayer()));
+        } else if (crops.containsKey(location_.getBlock())) {
+            e.setDropItems(false);
+
+            Location location = location_;
+            location.setY(location.getY()+.5);
+            location.setZ(location.getZ()+.5);
+            location.setX(location.getX()+.5);
+
+            crops.get(location_.getBlock()).dropItem();
+
+            crops.get(location_.getBlock()).removeHologram();
+            crops.remove(location_.getBlock());
+
+            this.plugin.getServer().getPluginManager().callEvent(new PlayerCropHarvest(crops.get(location_.getBlock()), e.getPlayer()));
         }
     }
 }
