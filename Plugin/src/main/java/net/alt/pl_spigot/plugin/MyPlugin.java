@@ -26,6 +26,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -33,6 +34,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
+import java.util.List;
 
 @SuppressWarnings("unused")
 
@@ -145,9 +147,13 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
 
                         String type = foodObject.getString("type");
                         String pType = foodObject.getConfigurationSection("place").getString("type");
-                        String particle = foodObject.getConfigurationSection("place").getConfigurationSection("particle").getString("name");
+                        String particle = foodObject.getConfigurationSection("particle").getConfigurationSection("on_place").getString("name");
+                        String particleH = foodObject.getConfigurationSection("particle").getConfigurationSection("on_harvest").getString("name");
+                        String particleE = foodObject.getConfigurationSection("particle").getConfigurationSection("on_eat").getString("name");
 
-                        int particleAmount = Integer.parseInt(foodObject.getConfigurationSection("place").getConfigurationSection("particle").getString("amount"));
+                        int particle_amount = Integer.parseInt(foodObject.getConfigurationSection("particle").getConfigurationSection("on_place").getString("amount"));
+                        int particleH_amount = Integer.parseInt(foodObject.getConfigurationSection("particle").getConfigurationSection("on_harvest").getString("amount"));
+                        int particleE_amount = Integer.parseInt(foodObject.getConfigurationSection("particle").getConfigurationSection("on_eat").getString("amount"));
 
                         // getting a player
                         Player p = Bukkit.getPlayer(args[1]);
@@ -156,13 +162,19 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
 
                         /* -===================================================================- */
                         i_meta.setDisplayName(this.nmsHandler.color("&r" + name));
-                        i_meta.setLore(this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getStringList("description"));
+                        List<String> deskList = this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getStringList("description");
+                        for (int i = 1; i <= deskList.size(); i++)
+                        {
+                            deskList.set(i-1, this.nmsHandler.color(deskList.get(i)));
+                        }
+                        i_meta.setLore(deskList);
                         i_meta.setCustomModelData(Integer.parseInt(this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getString("custom_model_data")));
                         // Setting count
                         int count = (args.length == 3) ? 1 : Integer.parseInt(args[3]);
                         item.setAmount(count);
                         /* -===================================================================- */
 
+                        /*                        -= PersistentDataContainers =-                 */
 
                         /* -===================================================================- */
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("food_level"), PersistentDataType.INTEGER, food_level);
@@ -172,11 +184,18 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("type"), PersistentDataType.STRING, type);
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("id"), PersistentDataType.STRING, args[2]);
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("particle"), PersistentDataType.STRING, particle);
-                        i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("particle_amount"), PersistentDataType.INTEGER, particleAmount);
+                        i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("particle_amount"), PersistentDataType.INTEGER, particle_amount);
+                        assert particleE != null;
+                        i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("particlee"), PersistentDataType.STRING, particleE);
+                        i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("particlee_amount"), PersistentDataType.INTEGER, particleE_amount);
+                        assert particleH != null;
+                        i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("particleh"), PersistentDataType.STRING, particleH);
+                        i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("particleh_amount"), PersistentDataType.INTEGER, particleH_amount);
 
                         item.setItemMeta(i_meta);
-                        /* -===================================================================- */
+                        /* -===================================================================-
 
+                         */
 
                         /* -===================================================================- */
                         // Give item & send message
@@ -229,6 +248,15 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
                     e.setCancelled(true);
 
                     Location location = e.getPlayer().getLocation();
+
+                    Location location_ = e.getPlayer().getLocation();
+                    location_.setY(location.getY()+1);
+
+                    PersistentDataContainer item = e.getItem().getItemMeta().getPersistentDataContainer();
+
+                    Particle particle = Particle.valueOf(item.get(NamespacedKey.fromString("particlee"), PersistentDataType.STRING));
+                    int particleAmount = item.get(NamespacedKey.fromString("particlee_amount"), PersistentDataType.INTEGER);
+                    location_.getWorld().spawnParticle(particle, location_, particleAmount);
 
                     p.getInventory().getItemInMainHand().setAmount(p.getInventory().getItemInMainHand().getAmount()-1);
                     e.getPlayer().setFoodLevel(p.getFoodLevel() + e.getItem().getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("food_level"), PersistentDataType.INTEGER));

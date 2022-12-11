@@ -4,9 +4,13 @@ import net.alt.pl_spigot.plugin.api.NMS;
 import net.alt.pl_spigot.plugin.crops.Crop;
 import net.alt.pl_spigot.plugin.crops.PlayerCropHarvest;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
@@ -39,6 +43,12 @@ public class BlockBreakEvent implements Listener {
             location.setZ(location.getZ()+.5);
             location.setX(location.getX()+.5);
 
+            PersistentDataContainer item = crops.get(e.getBlock()).getItem().getItemMeta().getPersistentDataContainer();
+
+            Particle particle = Particle.valueOf(item.get(NamespacedKey.fromString("particleh"), PersistentDataType.STRING));
+            int particleAmount = item.get(NamespacedKey.fromString("particleh_amount"), PersistentDataType.INTEGER);
+            e.getBlock().getWorld().spawnParticle(particle, e.getBlock().getLocation(), particleAmount);
+
             crops.get(e.getBlock()).dropItem();
 
             crops.get(e.getBlock()).removeHologram();
@@ -54,6 +64,12 @@ public class BlockBreakEvent implements Listener {
             location.setX(location.getX()+.5);
 
             crops.get(location_.getBlock()).dropItem();
+
+            PersistentDataContainer item = crops.get(location_.getBlock()).getItem().getItemMeta().getPersistentDataContainer();
+
+            Particle particle = Particle.valueOf(item.get(NamespacedKey.fromString("particleh"), PersistentDataType.STRING));
+            int particleAmount = item.get(NamespacedKey.fromString("particleh_amount"), PersistentDataType.INTEGER);
+            location_.getWorld().spawnParticle(particle, location_, particleAmount);
 
             crops.get(location_.getBlock()).removeHologram();
             crops.remove(location_.getBlock());
