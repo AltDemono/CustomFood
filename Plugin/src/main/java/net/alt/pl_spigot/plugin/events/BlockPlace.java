@@ -69,9 +69,8 @@ public class BlockPlace implements Listener {
             }
             crop.placeCrop(e.getBlockPlaced(), item);
             crops.put(e.getBlockPlaced(), crop);
-
             Particle particle = Particle.valueOf(e.getItemInHand().getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("particle"), PersistentDataType.STRING));
-            int particleAmount = e.getItemInHand().getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("particleAmount"), PersistentDataType.INTEGER);
+            int particleAmount = e.getItemInHand().getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("particle_amount"), PersistentDataType.INTEGER);
             e.getBlockPlaced().getWorld().spawnParticle(particle, e.getBlockPlaced().getLocation(), particleAmount);
 
             this.plugin.getServer().getPluginManager().callEvent(new CropPlaceEvent(crop, e.getPlayer(), e.getBlock(), e.getBlockAgainst()));
