@@ -8,6 +8,7 @@ import net.alt.pl_spigot.plugin.crops.CropPlaceEvent;
 // Bukkit
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Particle;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
@@ -68,6 +69,10 @@ public class BlockPlace implements Listener {
             }
             crop.placeCrop(e.getBlockPlaced(), item);
             crops.put(e.getBlockPlaced(), crop);
+
+            Particle particle = Particle.valueOf(e.getItemInHand().getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("particle"), PersistentDataType.STRING));
+            int particleAmount = e.getItemInHand().getItemMeta().getPersistentDataContainer().get(NamespacedKey.fromString("particleAmount"), PersistentDataType.INTEGER);
+            e.getBlockPlaced().getWorld().spawnParticle(particle, e.getBlockPlaced().getLocation(), particleAmount);
 
             this.plugin.getServer().getPluginManager().callEvent(new CropPlaceEvent(crop, e.getPlayer(), e.getBlock(), e.getBlockAgainst()));
         }

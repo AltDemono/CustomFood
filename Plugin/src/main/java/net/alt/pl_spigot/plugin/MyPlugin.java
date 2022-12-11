@@ -19,6 +19,7 @@ import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -137,11 +138,16 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
                         ItemStack item = new ItemStack(material);
                         ItemMeta i_meta = item.getItemMeta();
 
-                        String name = this.nmsHandler.color(this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getString("name"));
-                        int food_level = Integer.parseInt(this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getString("food_level"));
+                        ConfigurationSection foodObject = this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]);
 
-                        String type = this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getString("type");
-                        String pType = this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getConfigurationSection("place").getString("type");
+                        String name = this.nmsHandler.color(foodObject.getString("name"));
+                        int food_level = Integer.parseInt(foodObject.getString("food_level"));
+
+                        String type = foodObject.getString("type");
+                        String pType = foodObject.getConfigurationSection("place").getString("type");
+                        String particle = foodObject.getConfigurationSection("place").getConfigurationSection("particle").getString("name");
+
+                        int particleAmount = Integer.parseInt(foodObject.getConfigurationSection("place").getConfigurationSection("particle").getString("amount"));
 
                         // getting a player
                         Player p = Bukkit.getPlayer(args[1]);
@@ -150,10 +156,8 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
 
                         /* -===================================================================- */
                         i_meta.setDisplayName(this.nmsHandler.color("&r" + name));
-                        i_meta.setLore(getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getStringList("description"));
+                        i_meta.setLore(this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getStringList("description"));
                         i_meta.setCustomModelData(Integer.parseInt(this.getConfig().getConfigurationSection("food").getConfigurationSection(args[2]).getString("custom_model_data")));
-                        // Set item meta
-                        item.setItemMeta(i_meta);
                         // Setting count
                         int count = (args.length == 3) ? 1 : Integer.parseInt(args[3]);
                         item.setAmount(count);
@@ -167,6 +171,10 @@ public class MyPlugin extends JavaPlugin implements CommandExecutor, Listener {
                         assert type != null;
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("type"), PersistentDataType.STRING, type);
                         i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("id"), PersistentDataType.STRING, args[2]);
+                        i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("particle"), PersistentDataType.STRING, particle);
+                        i_meta.getPersistentDataContainer().set(NamespacedKey.fromString("particle_amount"), PersistentDataType.INTEGER, particleAmount);
+
+                        item.setItemMeta(i_meta);
                         /* -===================================================================- */
 
 

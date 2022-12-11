@@ -1,4 +1,6 @@
 hologramsEnabled: true
+particlesEnabled: true
+effectsEnabled: true
 
 food:
   iron_carrot:
@@ -7,9 +9,14 @@ food:
     name: '&cIron Carrot'
     custom_model_data: 1
     material: CARROT
+    effect:
+      name:
     food_level: 20
     place:
       type: multiple
+      particle:
+        name: CRIT_MAGIC
+        amount: 12
       allowedBlocks:
         - farmland
       material: CARROTS
