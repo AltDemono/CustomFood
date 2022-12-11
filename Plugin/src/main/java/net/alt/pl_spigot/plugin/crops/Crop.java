@@ -10,6 +10,7 @@ package net.alt.pl_spigot.plugin.crops;
 import me.filoghost.holographicdisplays.api.HolographicDisplaysAPI;
 import me.filoghost.holographicdisplays.api.hologram.Hologram;
 
+import net.alt.pl_spigot.plugin.api.ICrop;
 import net.alt.pl_spigot.plugin.api.NMS;
 
 // Bukkit
@@ -27,7 +28,7 @@ import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("unused")
-public class Crop implements ICrop{
+public class Crop implements ICrop {
     /* -===================================================================- */
     // params
     private Hologram hologram;
