@@ -9,14 +9,21 @@ food:
     name: '&cIron Carrot'
     custom_model_data: 1
     material: CARROT
+    particle:
+      on_place:
+        name: CRIT_MAGIC
+        amount: 12
+      on_harvest:
+        name: CRIT_MAGIC
+        amount: 12
+      on_eat:
+        name: CRIT_MAGIC
+        amount: 12
     effect:
       name:
     food_level: 20
     place:
       type: multiple
-      particle:
-        name: CRIT_MAGIC
-        amount: 12
       allowedBlocks:
         - farmland
       material: CARROTS
